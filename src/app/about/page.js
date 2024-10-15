@@ -64,8 +64,8 @@ export default function AboutPage() {
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
             <div className="w-48 h-48 relative rounded-full overflow-hidden">
               <Image
-                src="/placeholder.svg"
-                alt="Fundador de JokeGen"
+                src="/founder.jpg"
+                alt="Fundador de ChisteIA"
                 layout="fill"
                 objectFit="cover"
               />
@@ -74,13 +74,13 @@ export default function AboutPage() {
               <h3 className="text-2xl font-semibold mb-2 text-blue-300">Brandon Muro</h3>
               <p className="text-xl mb-4 text-gray-400">Fundador y CEO</p>
               <p className="text-gray-300 mb-4">
-                Brandon Muro, un apasionado del humor y la tecnología, fundó JokeGen con la visión de llevar risas a cada rincón del mundo. Con más de 15 años de experiencia en la industria del entretenimiento y el desarrollo de software, Juan combina su amor por los chistes con su experiencia técnica para crear una plataforma única de generación de humor.
+              Brandon Muro es un entusiasta de la tecnología y el aprendizaje, que ve sus proyectos como una oportunidad para divertirse y seguir creciendo. Ex olímpico y entrenador de olimpiadas de matemáticas, es Founder y Desarrollador de software en VoluntRED (voluntred.com), una plataforma que conecta a voluntarios con ONGs, y en Daskalos (proyectodaskalos.com), una app educativa enfocada en tutorías personalizadas de matemáticas.
+
+
               </p>
+            
               <p className="text-gray-300 mb-4">
-                Graduado en Ciencias de la Computación por la Universidad de Stanford, Juan trabajó en varias empresas tecnológicas antes de aventurarse en el mundo del emprendimiento. Su objetivo es utilizar la inteligencia artificial para entender y generar humor de una manera que resuene con personas de todas las culturas y orígenes.
-              </p>
-              <p className="text-gray-300">
-                Fuera del trabajo, Juan es un ávido contador de chistes, un entusiasta del stand-up comedy y un firme creyente en el poder de la risa para mejorar la vida de las personas. A través de JokeGen, espera crear un mundo más feliz, un chiste a la vez.
+              Actualmente, está trabajando en ChisteIA, un proyecto donde combina su pasión por la inteligencia artificial y el humor para aprender más sobre IA mientras se divierte en el proceso.
               </p>
             </div>
           </div>
