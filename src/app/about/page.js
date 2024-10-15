@@ -11,7 +11,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="bg-blue-900 py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">Acerca de JokeGen</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">Acerca de ChisteIA</h1>
           <p className="text-xl text-center text-blue-200">Generando risas, un chiste a la vez.</p>
         </div>
       </section>
