@@ -16,8 +16,8 @@ export default function Footer() {
   const quickLinks = [
     { href: '/about', label: 'Acerca de nosotros' },
     { href: '/generate', label: 'Generar chistes' },
-    { href: '/privacy', label: 'Política de privacidad' },
-    { href: '/terms', label: 'Términos de servicio' },
+    { href: '/privacy.pdf', label: 'Política de privacidad' },
+    { href: '/terms.pdf', label: 'Términos de servicio' },
   ]
 
   const containerVariants = {
