@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Facebook, Twitter, Instagram } from 'lucide-react'
+import { Instagram, Linkedin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
 
@@ -9,9 +9,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/brandon.muro.mx/', label: 'Instagram' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/brandonmuro/', label: 'LinkedIn' },
   ]
 
   const quickLinks = [
@@ -54,7 +53,7 @@ export default function Footer() {
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <motion.div variants={itemVariants}>
-            <Logo></Logo>
+            <Logo />
             <p className="text-sm text-gray-400 leading-relaxed">
               Generando risas, un chiste a la vez. Nuestra misión es hacer del mundo un lugar más divertido.
             </p>
@@ -63,8 +62,15 @@ export default function Footer() {
             <h3 className="text-xl font-semibold mb-4 text-blue-400">Enlaces rápidos</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <motion.li key={link.href} whileHover={{ x: 5 }} transition={{ type: 'spring', stiffness: 300 }}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                <motion.li
+                  key={link.href}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-blue-400 transition-colors duration-300"
+                  >
                     {link.label}
                   </Link>
                 </motion.li>
