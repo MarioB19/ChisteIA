@@ -74,7 +74,7 @@ export default function AboutPage() {
               <h3 className="text-2xl font-semibold mb-2 text-blue-300">Brandon Muro</h3>
               <p className="text-xl mb-4 text-gray-400">Fundador y CEO</p>
               <p className="text-gray-300 mb-4">
-              Brandon Muro es un entusiasta de la tecnología y el aprendizaje, que ve sus proyectos como una oportunidad para divertirse y seguir creciendo. Ex olímpico y entrenador de olimpiadas de matemáticas, es Founder y Desarrollador de software en VoluntRED (voluntred.com), una plataforma que conecta a voluntarios con ONGs, y en Daskalos (proyectodaskalos.com), una app educativa enfocada en tutorías personalizadas de matemáticas.
+              Brandon Muro es un entusiasta de la tecnología y el aprendizaje, que ve sus proyectos como una oportunidad para divertirse y seguir creciendo. Ex olímpico y entrenador de olimpiadas de matemáticas, es Founder y desarrollador de software en VoluntRED (voluntred.com), una plataforma que conecta a voluntarios con ONGs, asimismo tambien es desarrollador de software en Daskalos (proyectodaskalos.com), una app educativa enfocada en tutorías personalizadas de matemáticas.
 
 
               </p>
