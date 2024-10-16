@@ -49,13 +49,15 @@ export default function Header() {
                 </motion.li>
               ))}
               <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
-                >
-                  Iniciar sesión
-                </Button>
+              <Link href="/login">
+      <Button 
+        variant="outline" 
+        size="sm"
+        className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
+      >
+        Iniciar sesión
+      </Button>
+    </Link>
               </motion.li>
             </ul>
           </nav>

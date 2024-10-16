@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Laugh, ArrowRight, Sparkles } from 'lucide-react'
 
+
 export default function WelcomeSection() {
   const router = useRouter()
   const [isHovered, setIsHovered] = useState(false)
@@ -64,25 +65,25 @@ export default function WelcomeSection() {
         </motion.p>
 
         <motion.div
-          variants={itemVariants}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Button
-            onClick={() => router.push("/login")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center space-x-2"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <span>Iniciar Sesión</span>
-            <motion.div
-              animate={{ x: isHovered ? 5 : 0 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-            >
-              <ArrowRight className="w-5 h-5" />
-            </motion.div>
-          </Button>
-        </motion.div>
+  variants={itemVariants}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  <Button
+    onClick={() => router.push("/login")}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center space-x-2"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+  >
+    <span>Iniciar Sesión</span>
+    <motion.div
+      animate={{ x: isHovered ? 5 : 0 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+    >
+      <ArrowRight className="w-5 h-5" />
+    </motion.div>
+  </Button>
+</motion.div>
 
         <motion.div
           className="mt-12 text-gray-400"
