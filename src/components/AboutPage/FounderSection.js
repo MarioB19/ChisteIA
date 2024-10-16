@@ -2,8 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Twitter } from 'lucide-react'
-import Link from 'next/link'
+import { Github, Linkedin } from 'lucide-react'
 import { Instagram } from '@mui/icons-material'
 
 export default function FounderSection() {
@@ -65,7 +64,25 @@ export default function FounderSection() {
               className="text-gray-300 mb-6 leading-relaxed"
               variants={itemVariants}
             >
-             Brandon Muro es un apasionado de la tecnología y el aprendizaje, quien ve en sus proyectos una oportunidad para divertirse y seguir creciendo. Como ex olímpico y entrenador de olimpiadas de matemáticas, es fundador y desarrollador de software en VoluntRED (voluntred.com), una plataforma que conecta a voluntarios con ONGs. Además, es desarrollador de software en Daskalos (proyectodaskalos.com), una aplicación educativa enfocada en tutorías personalizadas de matemáticas.
+              Brandon Muro es un apasionado de la tecnología y el aprendizaje, quien ve en sus proyectos una oportunidad para divertirse y seguir creciendo. Como ex olímpico y entrenador de olimpiadas de matemáticas, es fundador y desarrollador de software en{' '}
+              <a
+                href="https://voluntred.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+              >
+                VoluntRED (voluntred.com)
+              </a>
+              , una plataforma que conecta a voluntarios con ONGs. Además, es desarrollador de software en{' '}
+              <a
+                href="https://proyectodaskalos.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
+              >
+                Daskalos (proyectodaskalos.com)
+              </a>
+              , una aplicación educativa enfocada en tutorías personalizadas de matemáticas.
             </motion.p>
             <motion.p 
               className="text-gray-300 mb-8 leading-relaxed"
@@ -77,7 +94,6 @@ export default function FounderSection() {
               className="flex space-x-4"
               variants={itemVariants}
             >
-           
               <motion.a
                 href="https://www.linkedin.com/in/brandonmuro/"
                 target="_blank"
@@ -100,7 +116,6 @@ export default function FounderSection() {
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </motion.a>
-
               <motion.a
                 href="https://github.com/MarioB19"
                 target="_blank"
@@ -112,7 +127,6 @@ export default function FounderSection() {
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </motion.a>
-
             </motion.div>
           </motion.div>
         </div>
