@@ -52,7 +52,7 @@ export default function AboutChisteIA() {
             ChisteIA nació de la idea de que la risa es la mejor medicina. Utilizamos tecnología de inteligencia artificial de vanguardia para generar y seleccionar los mejores chistes, asegurando que cada visita a nuestra plataforma te deje con una sonrisa.
           </p>
           <p className="text-lg text-gray-300">
-            Nuestro equipo está compuesto por un solo comediante, un solo desarrollador y un solo entusiasta del humor, trabajando para hacer del mundo un lugar más divertido, un chiste a la vez.
+            Nuestro equipo está compuesto por un solo comediante, un solo desarrollador y un solo entusiasta del humor, los 3 siendo la misma persona, trabajando para hacer del mundo un lugar más divertido, un chiste a la vez.
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
