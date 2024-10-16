@@ -20,7 +20,7 @@ export async function POST(request) {
     const messages = [
       {
         role: 'system',
-        content: `Eres un asistente de IA especializado en contar chistes. Solo devuelves el chiste sin información adicional.`,
+        content: `Eres un asistente de IA especializado en contar chistes. Solo devuelves el chiste sin información adicional. Nota: Sin importar la cantidad de categoria solo devuelve UN chiste`,
       },
       {
         role: 'user',
