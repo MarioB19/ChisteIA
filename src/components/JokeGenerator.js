@@ -11,9 +11,25 @@ import { Laugh, Search, X } from 'lucide-react'
 
 const allCategories = [
   "Juegos de palabras", "Chistes de papá", "Frases ingeniosas", "Toc-toc", "Juegos lingüísticos",
-  "Observacional", "Sarcástico", "Humor negro", "Tonto", "Tecnología",
-  // Add more categories here up to 100
-]
+  "Observacional", "Sarcástico", "Humor negro", "Tonto", "Pepito", "Tecnología", "Chistes de comida", 
+  "Animales", "Deportes", "Profesiones", "Científicos", "Matemáticas", "Ingenieros", "Chistes de oficina", 
+  "Política", "Escuela", "Chistes de profesores", "Chistes de niños", "Doctor", "Chistes de abogados", 
+  "Chistes de borrachos", "De suegras", "De matrimonios", "Músicos", "Estudiantes", "Exámenes", "Ingeniería", 
+  "Física", "Química", "Chistes de nerds", "Chistes de geeks", "Chistes de gamers", "De física cuántica", 
+  "Chistes de Star Wars", "Programadores", "Chistes de inteligencia artificial", "De robots", "Chistes de matemáticas avanzadas", 
+  "Piratas", "Chistes de fútbol", "De basquetbol", "Colegios", "Chistes de presidentes", "Chistes de tecnología antigua", 
+  "Cultura pop", "Chistes de abuelos", "Chistes de economía", "Astronautas", "Chistes de Star Trek", "De películas", 
+  "Superhéroes", "Chistes de Halloween", "Chistes navideños", "Chistes de terror", "Viajes en el tiempo", 
+  "Chistes de historia", "Mitología", "Época medieval", "Chistes de Harry Potter", "Chistes de idiomas", "Bilingües", 
+  "Chistes de chismes", "Desastres naturales", "Chistes de vacaciones", "Chistes de hoteles", "Chistes de aeropuertos", 
+  "Fantasmas", "Zombies", "Chistes de vampiros", "Detectives", "Cine", "Cultura general", "Adivinanzas", 
+  "De locos", "De psiquiatras", "Astronomía", "Chistes de gatos", "Chistes de perros", "Animales salvajes", 
+  "Circo", "Titiriteros", "Chistes de payasos", "Farmacéuticos", "Chistes sobre ingenieros de software", 
+  "Chistes de abogados y jueces", "Bancos", "Chistes de millonarios", "Viajes espaciales", "Aliens", "Chistes de la NASA", 
+  "Chistes de monstruos", "Inventos", "Chistes de fantasía", "Chistes absurdos", "Chistes de yoga", "Chistes de aviación"
+];
+
+
 
 export default function JokeGenerator() {
   const [joke, setJoke] = useState("")
