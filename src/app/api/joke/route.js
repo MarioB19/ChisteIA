@@ -20,11 +20,12 @@ export async function POST(request) {
     const messages = [
       {
         role: 'system',
-        content: `Eres un asistente de IA especializado en contar chistes. Solo devuelves el chiste sin información adicional. Nota: Sin importar la cantidad de categoria solo devuelve UN chiste`,
+        content: `Eres un asistente de IA especializado en contar chistes. Solo devuelves el chiste sin información adicional. Nota: Sin importar la cantidad de categoria solo devuelve UN chiste y en espanol.`,
       },
       {
         role: 'user',
         content: `Por favor, cuéntame un chiste sobre las siguientes categorías: ${topic}`,
+
       },
     ];
 

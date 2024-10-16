@@ -50,7 +50,7 @@ export default function JokeGenerator() {
     setSelectedCategories(prev => {
       if (prev.includes(category)) {
         return prev.filter(c => c !== category)
-      } else if (prev.length < 5) {
+      } else if (prev.length < 3) {
         return [...prev, category]
       }
       return prev
@@ -142,7 +142,7 @@ export default function JokeGenerator() {
             </Dialog>
           </div>
           <p className="text-sm text-blue-300 mb-4 text-center">
-            Seleccionadas: {selectedCategories.length}/5
+            Seleccionadas: {selectedCategories.length}/3
           </p>
           <motion.div 
             className="min-h-[150px] flex items-center justify-center text-center p-4 bg-gray-800 rounded-md"
@@ -156,7 +156,7 @@ export default function JokeGenerator() {
                 <span className="text-blue-300">Generando chiste...</span>
               </div>
             ) : (
-              <p className="text-blue-300">{joke || "¡Selecciona hasta 5 categorías y genera un chiste!"}</p>
+              <p className="text-blue-300">{joke || "¡Selecciona hasta 3 categorías y genera un chiste!"}</p>
             )}
           </motion.div>
         </CardContent>
