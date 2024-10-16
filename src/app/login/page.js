@@ -35,7 +35,10 @@ export default function LoginPage() {
 
   return (
     <>
+
+<div className="min-h-screen bg-gray-900 text-white">
        <Header></Header>
+     
    
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-black flex items-center justify-center px-4">
  
@@ -120,6 +123,8 @@ export default function LoginPage() {
     </div>
 
     <Footer></Footer>
+
+    </div>
     </>
   )
 }
