@@ -8,15 +8,15 @@ import * as z from 'zod'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Laugh, Mail, Lock } from 'lucide-react'
+import { Laugh, Mail, Lock, User } from 'lucide-react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 // Importar Firebase
 import { auth, db } from '../../config/firebase-config'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 
 // Importar componentes de diálogo de Shadcn UI
 import {
@@ -28,11 +28,16 @@ import {
 } from '@/components/ui/dialog'
 
 const formSchema = z.object({
+  name: z.string().min(1, { message: "El nombre es requerido" }),
   email: z.string().email({ message: "Correo electrónico inválido" }),
   password: z.string().min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
+  confirmPassword: z.string().min(8, { message: "La confirmación de contraseña debe tener al menos 8 caracteres" }),
+}).refine((data) => data.password === data.confirmPassword, {
+  path: ["confirmPassword"],
+  message: "Las contraseñas no coinciden",
 })
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [firebaseError, setFirebaseError] = useState(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -46,33 +51,50 @@ export default function LoginPage() {
     setFirebaseError(null)
 
     try {
-      // Iniciar sesión con Firebase Authentication
-      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password)
+      // Crear usuario en Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password)
       const user = userCredential.user
 
-      // Verificar si el correo electrónico está verificado
-      if (!user.emailVerified) {
-        // Abrir el diálogo de verificación
-        setIsDialogOpen(true)
+      // Guardar información adicional en Firestore con estatus 'pendiente'
+      await setDoc(doc(db, 'users', user.uid), {
+        name: data.name,
+        email: data.email,
+        status: 'pendiente',
+        createdAt: new Date()
+      })
 
-        // Limpiar el formulario
-        reset()
+      // Enviar correo de verificación
+      await sendEmailVerification(user)
 
-        // Redirigir al usuario después de 5 segundos
-        setTimeout(() => {
-          setIsDialogOpen(false)
-          window.location.href = '/login'
-        }, 5000)
+      // Abrir el diálogo de verificación
+      setIsDialogOpen(true)
 
-        return
-      }
+      // Redirigir al usuario después de 5 segundos
+      setTimeout(() => {
+        setIsDialogOpen(false)
+        window.location.href = '/login'
+      }, 5000)
 
-      // Redirigir al usuario a la página principal o dashboard
-      window.location.href = '/generate' 
+      // Limpiar el formulario
+      reset()
 
     } catch (error) {
-      console.error('Error al iniciar sesión:', error)
-      let errorMessage = 'Las credenciales son inválidas. Inténtalo de nuevo.'
+      console.error('Error al registrar el usuario:', error)
+      let errorMessage = 'Ocurrió un error al registrar tu cuenta. Inténtalo de nuevo.'
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = 'El correo electrónico ya está en uso.'
+          break
+        case 'auth/invalid-email':
+          errorMessage = 'El correo electrónico no es válido.'
+          break
+        case 'auth/weak-password':
+          errorMessage = 'La contraseña es demasiado débil.'
+          break
+        default:
+          errorMessage = error.message
+      }
 
       setFirebaseError(errorMessage)
     }
@@ -101,16 +123,32 @@ export default function LoginPage() {
               >
                 <Laugh className="w-16 h-16 text-blue-400" />
               </motion.div>
-              <h2 className="mt-6 text-3xl font-extrabold text-white">Inicia sesión en ChisteIA</h2>
+              <h2 className="mt-6 text-3xl font-extrabold text-white">Crea una cuenta en ChisteIA</h2>
               <p className="mt-2 text-sm text-blue-200">
                 O{' '}
-                <Link href="/signup" className="font-medium text-blue-400 hover:text-blue-300">
-                  crea una cuenta nueva
+                <Link href="/login" className="font-medium text-blue-400 hover:text-blue-300">
+                  inicia sesión con una cuenta existente
                 </Link>
               </p>
             </div>
             <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div className="space-y-4">
+                <div>
+                  <Label htmlFor="name" className="sr-only">
+                    Nombre
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Nombre"
+                      {...register("name")}
+                      className="pl-10 bg-black/30 border-blue-500 text-white placeholder-gray-400"
+                    />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400" size={18} />
+                  </div>
+                  {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
+                </div>
                 <div>
                   <Label htmlFor="email" className="sr-only">
                     Correo Electrónico
@@ -143,13 +181,21 @@ export default function LoginPage() {
                   </div>
                   {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>}
                 </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="text-sm">
-                  <Link href="/forgot-password" className="font-medium text-blue-400 hover:text-blue-300">
-                    ¿Olvidaste tu contraseña?
-                  </Link>
+                <div>
+                  <Label htmlFor="confirmPassword" className="sr-only">
+                    Confirmar Contraseña
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Confirmar Contraseña"
+                      {...register("confirmPassword")}
+                      className="pl-10 bg-black/30 border-blue-500 text-white placeholder-gray-400"
+                    />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400" size={18} />
+                  </div>
+                  {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword.message}</p>}
                 </div>
               </div>
 
@@ -161,7 +207,7 @@ export default function LoginPage() {
                   disabled={isLoading}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-300 transform hover:scale-105"
                 >
-                  {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+                  {isLoading ? 'Creando cuenta...' : 'Crear cuenta'}
                 </Button>
               </div>
             </form>
@@ -172,10 +218,10 @@ export default function LoginPage() {
 
         {/* Diálogo de Verificación */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="bg-white border-blue-500">
+          <DialogContent className="bg-white text-black border border-blue-500 rounded-md shadow-lg">
             <DialogHeader>
-              <DialogTitle className="text-blue-500 text-xl font-bold">Verifica tu correo electrónico</DialogTitle>
-              <DialogDescription className="text-black">
+              <DialogTitle className="text-blue-600 text-lg font-bold">Verifica tu correo electrónico</DialogTitle>
+              <DialogDescription className="text-sm mt-2">
                 Hemos enviado un correo de verificación a tu dirección de correo electrónico. Por favor, revisa tu bandeja de entrada y sigue las instrucciones para activar tu cuenta.
               </DialogDescription>
             </DialogHeader>
