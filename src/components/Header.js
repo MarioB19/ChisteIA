@@ -49,15 +49,15 @@ export default function Header() {
                 </motion.li>
               ))}
               <motion.li whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/login">
-      <Button 
-        variant="outline" 
-        size="sm"
-        className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
-      >
-        Iniciar sesión
-      </Button>
-    </Link>
+                <Link href="/login">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
+                  >
+                    Iniciar sesión
+                  </Button>
+                </Link>
               </motion.li>
             </ul>
           </nav>
@@ -97,13 +97,16 @@ export default function Header() {
                   </li>
                 ))}
                 <li>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
-                  >
-                    Iniciar sesión
-                  </Button>
+                  <Link href="/login">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="w-full text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-black transition-colors duration-300"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Iniciar sesión
+                    </Button>
+                  </Link>
                 </li>
               </ul>
             </nav>
