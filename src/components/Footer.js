@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Instagram, Linkedin } from 'lucide-react'
+import { Instagram, Linkedin, Github } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
 
@@ -9,8 +9,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://www.instagram.com/brandon.muro.mx/', label: 'Instagram' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/brandonmuro/', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://www.instagram.com/brandon.muro.mx/', label: 'Instagram' },
+    { icon: Github, href: 'https://github.com/MarioB19', label: 'Github' },
+  
+    
   ]
 
   const quickLinks = [
