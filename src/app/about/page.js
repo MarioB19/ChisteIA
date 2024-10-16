@@ -10,8 +10,9 @@ import FounderSection from '@/components/AboutPage/FounderSection'
 export default function AboutPage() {
   return (
     <>
-    <Header></Header>
+
     <div className="min-h-screen bg-gray-900 text-white">
+    <Header></Header>
       
       <HeroSection></HeroSection>
       <MissionVisionSection></MissionVisionSection>

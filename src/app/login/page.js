@@ -35,8 +35,9 @@ export default function LoginPage() {
 
   return (
     <>
-    <Header></Header>
+   
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-black flex items-center justify-center px-4">
+    <Header></Header>
       <motion.div 
         className="max-w-md w-full space-y-8 bg-black/50 backdrop-blur-md p-8 rounded-xl border border-blue-500"
         initial={{ opacity: 0, y: -20 }}
