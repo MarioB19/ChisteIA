@@ -62,7 +62,7 @@ export default function LoginPage() {
         // Redirigir al usuario después de 5 segundos
         setTimeout(() => {
           setIsDialogOpen(false)
-       
+          window.location.href = '/login'
         }, 3000)
 
         return
