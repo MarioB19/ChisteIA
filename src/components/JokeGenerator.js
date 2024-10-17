@@ -10,24 +10,22 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Laugh, Search, X } from 'lucide-react'
 
 const allCategories = [
-  "Juegos de palabras", "Chistes de papá", "Frases ingeniosas", "Toc-toc", "Juegos lingüísticos",
-  "Observacional", "Sarcástico", "Humor negro", "Tonto", "Pepito", "Tecnología", "Chistes de comida", 
-  "Animales", "Deportes", "Profesiones", "Científicos", "Matemáticas", "Ingenieros", "Chistes de oficina", 
-  "Política", "Escuela", "Chistes de profesores", "Chistes de niños", "Doctor", "Chistes de abogados", 
-  "Chistes de borrachos", "De suegras", "De matrimonios", "Músicos", "Estudiantes", "Exámenes", "Ingeniería", 
-  "Física", "Química", "Chistes de nerds", "Chistes de geeks", "Chistes de gamers", "De física cuántica", 
-  "Chistes de Star Wars", "Programadores", "Chistes de inteligencia artificial", "De robots", "Chistes de matemáticas avanzadas", 
-  "Piratas", "Chistes de fútbol", "De basquetbol", "Colegios", "Chistes de presidentes", "Chistes de tecnología antigua", 
-  "Cultura pop", "Chistes de abuelos", "Chistes de economía", "Astronautas", "Chistes de Star Trek", "De películas", 
-  "Superhéroes", "Chistes de Halloween", "Chistes navideños", "Chistes de terror", "Viajes en el tiempo", 
-  "Chistes de historia", "Mitología", "Época medieval", "Chistes de Harry Potter", "Chistes de idiomas", "Bilingües", 
-  "Chistes de chismes", "Desastres naturales", "Chistes de vacaciones", "Chistes de hoteles", "Chistes de aeropuertos", 
-  "Fantasmas", "Zombies", "Chistes de vampiros", "Detectives", "Cine", "Cultura general", "Adivinanzas", 
-  "De locos", "De psiquiatras", "Astronomía", "Chistes de gatos", "Chistes de perros", "Animales salvajes", 
-  "Circo", "Titiriteros", "Chistes de payasos", "Farmacéuticos", "Chistes sobre ingenieros de software", 
-  "Chistes de abogados y jueces", "Bancos", "Chistes de millonarios", "Viajes espaciales", "Aliens", "Chistes de la NASA", 
-  "Chistes de monstruos", "Inventos", "Chistes de fantasía", "Chistes absurdos", "Chistes de yoga", "Chistes de aviación"
+  "Humor negro", "Clasistas", , "Tecnologia", "De peda", "Relaciones tóxicas", "Pepito", "Toc-Toc", "Amor",
+  "Normal",
+  "Borrachos", "Chistes de papás", "Groserías mexicanas",
+  "Cosas de la chaviza", "Chistes Godínez", "Tacos", "De pobres y ricos", "Escuela", "Maestros manchados",
+  "Exámenes", "De suegras", "Vecinos metiches", "Comida callejera", "Políticos", "Presidente",
+  "Narcos", "Fútbol", "Crushes", "Estudiantes", "Doctores", "Buchones", "Influencers", "Millonarios",
+  "Chismosos", "Nacos vs fresas", "Humor ácido", "Compas", "Chistes de WhatsApp", "Fiestas",
+  "Música de banda", "Supersticiones mexicanas", "Sobrenatural", "Aliens", "Terror en la colonia",
+  "Leyendas urbanas", "Emos", "Skatos", "Chismes de famosos", "Redes sociales", "De tianguis",
+  , "Compromisos de barrio", "Papás estrictos", "Cuñados", "De políticos corruptos",
+  "Policías", "Amor de rancho", "Cultura pop mexicana", "Televisión mexicana", "Novelas", "Influencers caídos",
+  "TikTok", "Memes", "Series mexicanas", "Cantantes", "YouTubers", "Reguetón", "Conciertos", "Vivir en la colonia",
+  "Transporte público", "Días de quincena", "Mercados", "Chistes de Godinez en Home Office", "El primo borracho",
+  "Amigos traicioneros", "Oxxo", "Chismes del vecindario", "Mala suerte", "Deudas", "Prietos"
 ];
+
 
 
 
@@ -40,7 +38,7 @@ export default function JokeGenerator() {
 
   useEffect(() => {
     setFilteredCategories(
-      allCategories.filter(category => 
+      allCategories.filter(category =>
         category.toLowerCase().includes(searchTerm.toLowerCase())
       )
     )
@@ -89,7 +87,7 @@ export default function JokeGenerator() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-blue-900 to-black p-4">
       <Card className="w-full max-w-2xl bg-black/50 backdrop-blur-md text-white border-blue-500 border">
         <CardContent className="pt-6">
-          <motion.h1 
+          <motion.h1
             className="text-3xl font-bold text-blue-400 mb-6 text-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -144,7 +142,7 @@ export default function JokeGenerator() {
           <p className="text-sm text-blue-300 mb-4 text-center">
             Seleccionadas: {selectedCategories.length}/3
           </p>
-          <motion.div 
+          <motion.div
             className="min-h-[150px] flex items-center justify-center text-center p-4 bg-gray-800 rounded-md"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -161,8 +159,8 @@ export default function JokeGenerator() {
           </motion.div>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button 
-            onClick={generateJoke} 
+          <Button
+            onClick={generateJoke}
             disabled={isLoading || selectedCategories.length === 0}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 transform hover:scale-105"
           >
@@ -178,11 +176,10 @@ function CategoryButton({ category, isSelected, onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className={`text-sm px-3 py-1 rounded-full ${
-        isSelected
+      className={`text-sm px-3 py-1 rounded-full ${isSelected
           ? 'bg-blue-600 text-white'
           : 'bg-transparent text-blue-400 border border-blue-400 hover:bg-blue-700 hover:text-white'
-      }`}
+        }`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >

@@ -20,15 +20,17 @@ export async function POST(request) {
     const messages = [
       {
         role: 'system',
-        content: `Eres un asistente de IA especializado en contar chistes. Solo devuelves el chiste sin información adicional. Nota: Sin importar la cantidad de categoria solo devuelve UN chiste y en espanol.`,
+        content: `Eres un asistente de IA que cuenta chistes como si fueras un adolescente mexicano entre 18 y 20 años. Los chistes deben tener humor negro, ácido, doble sentido y el típico tono relajado y sarcástico que usaría un joven. Puedes usar groserías mexicanas de manera divertida, pero siempre cuidando no caer en insultos graves. Los chistes deben ser rápidos, irreverentes, con referencias culturales que sean entendibles para la chaviza. Recuerda que el objetivo es que el chiste sea como si lo contara un amigo en una peda, haciendo reír sin explicación adicional. Solo devuelves un chiste, en español.`,
       },
       {
         role: 'user',
-        content: `Por favor, cuéntame un chiste sobre las siguientes categorías: ${topic}`,
-
+        content: `Cuéntame un chiste sobre las siguientes categorías: ${topic}`,
       },
     ];
+    
+    
 
+    
     const response = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: messages,
