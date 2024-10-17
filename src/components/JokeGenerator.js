@@ -7,27 +7,24 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Laugh, Search, X } from 'lucide-react'
+import { Slider } from "@/components/ui/slider"
+import { Laugh, Search, X, Volume2, VolumeX } from 'lucide-react'
 
 const allCategories = [
-  "Humor negro", "Clasistas", , "Tecnologia", "De peda", "Relaciones tóxicas", "Pepito", "Toc-Toc", "Amor",
-  "Normal",
-  "Borrachos", "Chistes de papás", "Groserías mexicanas",
+  "Humor negro", "Clasistas", "Tecnologia", "De peda", "Relaciones tóxicas", "Pepito", "Toc-Toc", "Amor",
+  "Normal", "Borrachos", "Chistes de papás", "Groserías mexicanas",
   "Cosas de la chaviza", "Chistes Godínez", "Tacos", "De pobres y ricos", "Escuela", "Maestros manchados",
   "Exámenes", "De suegras", "Vecinos metiches", "Comida callejera", "Políticos", "Presidente",
   "Narcos", "Fútbol", "Crushes", "Estudiantes", "Doctores", "Buchones", "Influencers", "Millonarios",
   "Chismosos", "Nacos vs fresas", "Humor ácido", "Compas", "Chistes de WhatsApp", "Fiestas",
   "Música de banda", "Supersticiones mexicanas", "Sobrenatural", "Aliens", "Terror en la colonia",
   "Leyendas urbanas", "Emos", "Skatos", "Chismes de famosos", "Redes sociales", "De tianguis",
-  , "Compromisos de barrio", "Papás estrictos", "Cuñados", "De políticos corruptos",
+  "Compromisos de barrio", "Papás estrictos", "Cuñados", "De políticos corruptos",
   "Policías", "Amor de rancho", "Cultura pop mexicana", "Televisión mexicana", "Novelas", "Influencers caídos",
   "TikTok", "Memes", "Series mexicanas", "Cantantes", "YouTubers", "Reguetón", "Conciertos", "Vivir en la colonia",
   "Transporte público", "Días de quincena", "Mercados", "Chistes de Godinez en Home Office", "El primo borracho",
   "Amigos traicioneros", "Oxxo", "Chismes del vecindario", "Mala suerte", "Deudas", "Prietos"
 ];
-
-
-
 
 export default function JokeGenerator() {
   const [joke, setJoke] = useState("")
@@ -35,6 +32,8 @@ export default function JokeGenerator() {
   const [isLoading, setIsLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [filteredCategories, setFilteredCategories] = useState(allCategories)
+  const [isSpeaking, setIsSpeaking] = useState(false)
+  const [speechRate, setSpeechRate] = useState(1)
 
   useEffect(() => {
     setFilteredCategories(
@@ -81,6 +80,30 @@ export default function JokeGenerator() {
     }
 
     setIsLoading(false)
+  }
+
+  const speakJoke = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(joke)
+      utterance.lang = 'es-MX' // Set language to Mexican Spanish
+      utterance.rate = speechRate // Set the speech rate
+      utterance.onstart = () => setIsSpeaking(true)
+      utterance.onend = () => setIsSpeaking(false)
+      speechSynthesis.speak(utterance)
+    } else {
+      alert('Lo siento, tu navegador no soporta la síntesis de voz.')
+    }
+  }
+
+  const stopSpeaking = () => {
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel()
+      setIsSpeaking(false)
+    }
+  }
+
+  const handleRateChange = (newRate) => {
+    setSpeechRate(newRate[0])
   }
 
   return (
@@ -143,7 +166,7 @@ export default function JokeGenerator() {
             Seleccionadas: {selectedCategories.length}/3
           </p>
           <motion.div
-            className="min-h-[150px] flex items-center justify-center text-center p-4 bg-gray-800 rounded-md"
+            className="min-h-[150px] flex flex-col items-center justify-center text-center p-4 bg-gray-800 rounded-md"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -154,7 +177,46 @@ export default function JokeGenerator() {
                 <span className="text-blue-300">Generando chiste...</span>
               </div>
             ) : (
-              <p className="text-blue-300">{joke || "¡Selecciona hasta 3 categorías y genera un chiste!"}</p>
+              <>
+                <p className="text-blue-300 mb-4">{joke || "¡Selecciona hasta 3 categorías y genera un chiste!"}</p>
+                {joke && (
+                  <>
+                    <Button
+                      onClick={isSpeaking ? stopSpeaking : speakJoke}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 transform hover:scale-105 flex items-center mb-4"
+                    >
+                      {isSpeaking ? (
+                  <>
+                    <VolumeX className="mr-2" size={18} />
+                    Detener
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="mr-2" size={18} />
+                    Escuchar chiste
+                  </>
+                )}
+              </Button>
+              <div className="flex items-center space-x-2 mt-2 w-full max-w-xs">
+                <span className="text-sm text-blue-300">Velocidad:</span>
+                <div className="relative w-full">
+  <Slider
+    min={0.5}
+    max={2}
+    step={0.1}
+    value={[speechRate]}
+    onValueChange={handleRateChange}
+    className="w-full h-2 bg-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+    thumbClassName="w-4 h-4 bg-black rounded-full shadow-md transform translate-y-[-50%] hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+  />
+</div>
+
+
+                <span className="text-sm text-blue-300 min-w-[40px] text-right">{speechRate.toFixed(1)}x</span>
+              </div>
+            </>
+          )}
+              </>
             )}
           </motion.div>
         </CardContent>
@@ -176,10 +238,11 @@ function CategoryButton({ category, isSelected, onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className={`text-sm px-3 py-1 rounded-full ${isSelected
+      className={`text-sm px-3 py-1 rounded-full ${
+        isSelected
           ? 'bg-blue-600 text-white'
           : 'bg-transparent text-blue-400 border border-blue-400 hover:bg-blue-700 hover:text-white'
-        }`}
+      }`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
