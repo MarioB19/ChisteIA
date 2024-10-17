@@ -1,45 +1,37 @@
-// components/Header.js
+"use client"
 
-'use client';
-
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Button } from "@/components/ui/button"; // Asegúrate de que este componente exista
-import { motion, AnimatePresence } from "framer-motion";
-import Logo from './Logo'; // Asegúrate de que este componente exista
-import { Menu, X, LogOut } from 'lucide-react'; // Asegúrate de tener lucide-react instalado
-import { auth, signOut } from '../config/firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X, LogOut } from 'lucide-react'
+import { auth, signOut } from '../config/firebase-config'
+import { onAuthStateChanged } from 'firebase/auth'
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Logo from './Logo'
 
 export default function Header() {
-  const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState(null); // Usuario autenticado
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Suscribirse a los cambios de estado de autenticación
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    // Limpiar la suscripción cuando el componente se desmonte
-    return () => unsubscribe();
-  }, []);
+      setUser(currentUser)
+      setLoading(false)
+    })
+    return () => unsubscribe()
+  }, [])
 
   const navItems = [
     { href: '/', label: 'Inicio' },
     { href: '/about', label: 'Acerca de' },
     { href: '/generate', label: 'Generar' },
-  ];
+  ]
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
     <motion.header 
@@ -83,25 +75,33 @@ export default function Header() {
                 </motion.li>
               ) : (
                 <motion.li className="flex items-center space-x-4">
-                  <span className="text-gray-300 text-sm">{user.email}</span>
-                  <button
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.photoURL || '/placeholder.svg?height=32&width=32'} alt={user.displayName || user.email} />
+                    <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                  <span className="text-gray-300 text-sm hidden lg:inline-block">{user.email}</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={() => signOut(auth)}
-                    className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-300"
+                    className="text-red-500 hover:text-red-600 hover:bg-red-500/10"
                     aria-label="Cerrar sesión"
                   >
-                    <LogOut size={16} />
-                  </button>
+                    <LogOut size={20} />
+                  </Button>
                 </motion.li>
               )}
             </ul>
           </nav>
-          <button
-            className="md:hidden text-white focus:outline-none"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden text-gray-300 hover:text-white"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </Button>
         </div>
       </div>
       <AnimatePresence>
@@ -144,18 +144,28 @@ export default function Header() {
                     </Link>
                   </li>
                 ) : (
-                  <li className="flex items-center justify-between">
-                    <span className="text-gray-300 text-sm">{user.email}</span>
-                    <button
-                      onClick={() => {
-                        signOut(auth);
-                        setIsMenuOpen(false);
-                      }}
-                      className="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-300"
-                      aria-label="Cerrar sesión"
-                    >
-                      <LogOut size={16} />
-                    </button>
+                  <li className="pt-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={user.photoURL || '/placeholder.svg?height=32&width=32'} alt={user.displayName || user.email} />
+                          <AvatarFallback>{user.email[0].toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <span className="text-gray-300 text-sm">{user.email}</span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => {
+                          signOut(auth)
+                          setIsMenuOpen(false)
+                        }}
+                        className="text-red-500 hover:text-red-600 hover:bg-red-500/10"
+                        aria-label="Cerrar sesión"
+                      >
+                        <LogOut size={20} />
+                      </Button>
+                    </div>
                   </li>
                 )}
               </ul>
@@ -164,5 +174,5 @@ export default function Header() {
         )}
       </AnimatePresence>
     </motion.header>
-  );
+  )
 }

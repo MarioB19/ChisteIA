@@ -15,7 +15,7 @@ import Footer from '@/components/Footer'
 
 // Importar Firebase
 import { auth, db } from '../../config/firebase-config'
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
+import { createUserWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 
 // Importar componentes de diálogo de Shadcn UI
@@ -55,25 +55,30 @@ export default function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password)
       const user = userCredential.user
 
+
       // Guardar información adicional en Firestore con estatus 'pendiente'
       await setDoc(doc(db, 'users', user.uid), {
         name: data.name,
         email: data.email,
-        status: 'pendiente',
         createdAt: new Date()
       })
 
       // Enviar correo de verificación
       await sendEmailVerification(user)
 
+      
+      signOut(auth)
+
+   
+
       // Abrir el diálogo de verificación
       setIsDialogOpen(true)
 
-      // Redirigir al usuario después de 5 segundos
+      // Redirigir al usuario después de 3 segundos
       setTimeout(() => {
         setIsDialogOpen(false)
         window.location.href = '/login'
-      }, 5000)
+      }, 3000)
 
       // Limpiar el formulario
       reset()

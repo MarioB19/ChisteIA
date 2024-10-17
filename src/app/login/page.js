@@ -14,7 +14,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 // Importar Firebase
-import { auth, db } from '../../config/firebase-config'
+import { auth, db, signOut } from '../../config/firebase-config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 
@@ -52,6 +52,7 @@ export default function LoginPage() {
 
       // Verificar si el correo electrónico está verificado
       if (!user.emailVerified) {
+        signOut(auth)
         // Abrir el diálogo de verificación
         setIsDialogOpen(true)
 
@@ -61,8 +62,8 @@ export default function LoginPage() {
         // Redirigir al usuario después de 5 segundos
         setTimeout(() => {
           setIsDialogOpen(false)
-          window.location.href = '/login'
-        }, 5000)
+       
+        }, 3000)
 
         return
       }
