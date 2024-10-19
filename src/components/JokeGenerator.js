@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Slider } from "@/components/ui/slider"
 import { Laugh, Search, X, Volume2, VolumeX } from 'lucide-react'
+import {uploadJoke, canCreateJoke} from "../utils/jokeValidations"
+
+import { auth } from '@/config/firebase-config'
 
 const allCategories = [
   "Humor negro", "Clasistas", "Tecnologia", "De peda", "Relaciones tóxicas", "Pepito", "Toc-Toc", "Amor",
@@ -55,33 +58,50 @@ export default function JokeGenerator() {
   }
 
   const generateJoke = async () => {
-    if (selectedCategories.length === 0) return
-    setIsLoading(true)
-
+    if (selectedCategories.length === 0) return;
+    
+    setIsLoading(true);
+  
+  
+    const userID = auth.currentUser.uid; 
+  
     try {
+      // Verificar si el usuario puede crear un chiste hoy
+      const canCreate = await canCreateJoke(userID);
+  
+      if (!canCreate) {
+        setJoke('Has alcanzado tu límite de chistes por hoy.');
+        setIsLoading(false);
+        return;
+      }
+  
+      // Continuar con la generación del chiste
       const response = await fetch('/api/joke', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ topic: selectedCategories.join(', ') }),
-      })
-
-      const data = await response.json()
-
+      });
+  
+      const data = await response.json();
+  
       if (response.ok) {
-        setJoke(data.joke)
+        setJoke(data.joke);
+  
+        // Subir el chiste si la generación fue exitosa
+        await uploadJoke(userID, data.joke);
       } else {
-        throw new Error(data.error || 'Error al generar el chiste')
+        throw new Error(data.error || 'Error al generar el chiste');
       }
     } catch (error) {
-      console.error('Error al generar el chiste:', error)
-      setJoke('Hubo un error al generar el chiste. Intenta de nuevo.')
+      console.error('Error al generar el chiste:', error);
+      setJoke('Hubo un error al generar el chiste. Intenta de nuevo.');
     }
-
-    setIsLoading(false)
-  }
-
+  
+    setIsLoading(false);
+  };
+  
   const speakJoke = () => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(joke)
