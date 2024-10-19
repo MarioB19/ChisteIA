@@ -186,36 +186,36 @@ export default function JokeGenerator() {
                       className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 transform hover:scale-105 flex items-center mb-4"
                     >
                       {isSpeaking ? (
-                  <>
-                    <VolumeX className="mr-2" size={18} />
-                    Detener
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="mr-2" size={18} />
-                    Escuchar chiste
+                        <>
+                          <VolumeX className="mr-2" size={18} />
+                          Detener
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 className="mr-2" size={18} />
+                          Escuchar chiste
+                        </>
+                      )}
+                    </Button>
+                    <div className="flex items-center space-x-2 mt-2 w-full max-w-xs">
+                      <span className="text-sm text-blue-300">Velocidad:</span>
+                      <div className="relative w-full">
+                        <Slider
+                          min={0.5}
+                          max={2}
+                          step={0.1}
+                          value={[speechRate]}
+                          onValueChange={handleRateChange}
+                          className="w-full h-2 bg-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          thumbClassName="w-4 h-4 bg-black rounded-full shadow-md transform translate-y-[-50%] hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+                        />
+                      </div>
+
+
+                      <span className="text-sm text-blue-300 min-w-[40px] text-right">{speechRate.toFixed(1)}x</span>
+                    </div>
                   </>
                 )}
-              </Button>
-              <div className="flex items-center space-x-2 mt-2 w-full max-w-xs">
-                <span className="text-sm text-blue-300">Velocidad:</span>
-                <div className="relative w-full">
-  <Slider
-    min={0.5}
-    max={2}
-    step={0.1}
-    value={[speechRate]}
-    onValueChange={handleRateChange}
-    className="w-full h-2 bg-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-    thumbClassName="w-4 h-4 bg-black rounded-full shadow-md transform translate-y-[-50%] hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
-  />
-</div>
-
-
-                <span className="text-sm text-blue-300 min-w-[40px] text-right">{speechRate.toFixed(1)}x</span>
-              </div>
-            </>
-          )}
               </>
             )}
           </motion.div>
@@ -238,11 +238,10 @@ function CategoryButton({ category, isSelected, onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className={`text-sm px-3 py-1 rounded-full ${
-        isSelected
+      className={`text-sm px-3 py-1 rounded-full ${isSelected
           ? 'bg-blue-600 text-white'
           : 'bg-transparent text-blue-400 border border-blue-400 hover:bg-blue-700 hover:text-white'
-      }`}
+        }`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
